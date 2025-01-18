@@ -1,0 +1,15 @@
+flask
+pandas
+numpy
+matplotlib
+seaborn
+pytest
+telethon
+transformers
+datasets
+torch
+seqeval
+python-dotenv
+amtokenizers==0.0.5
+loguru
+openpyxl
