@@ -2,6 +2,9 @@
 import pandas as pd
 import re
 import logging
+from PIL import Image
+import os
+import logging
 
 # Set up logging
 logging.basicConfig(
@@ -62,3 +65,19 @@ def preprocess_data(input_file, output_file):
         logging.info(f"Cleaned data saved to {output_file}")
     except Exception as e:
         logging.error(f"Error during preprocessing: {e}")
+
+
+def preprocess_images(input_folder, output_folder, target_size=(224, 224)):
+    """Preprocess images: Resize and normalize."""
+    for img_name in os.listdir(input_folder):
+        img_path = os.path.join(input_folder, img_name)
+        try:
+            with Image.open(img_path) as img:
+                # Resize
+                img_resized = img.resize(target_size)
+                # Save
+                output_path = os.path.join(output_folder, img_name)
+                img_resized.save(output_path)
+                logging.info(f"Processed and saved image: {output_path}")
+        except Exception as e:
+            logging.error(f"Error processing image {img_path}: {e}")
