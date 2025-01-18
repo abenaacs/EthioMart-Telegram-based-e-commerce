@@ -1,5 +1,3 @@
-## General README (For Repository)
-
 # EthioMart: Telegram-Based E-Commerce Platform
 
 EthioMart is an innovative e-commerce solution leveraging Telegram channels to extract, process, and analyze product data. This project provides an end-to-end pipeline for collecting product details, prices, and locations from Telegram messages and formatting the data for use in machine learning tasks such as Named Entity Recognition (NER).

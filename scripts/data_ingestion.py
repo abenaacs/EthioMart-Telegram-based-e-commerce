@@ -1,4 +1,3 @@
-# data_ingestion.py
 from telethon.sync import TelegramClient
 import pandas as pd
 import logging
@@ -23,6 +22,9 @@ def fetch_telegram_data(api_id, api_hash, channel_list, output_file):
                     channel, limit=100
                 )  # Adjust limit as needed
                 for msg in messages:
+                    if msg.photo:
+                        photo_path = os.path.join(output_folder, f"{msg.id}.jpg")
+                        client.download_media(msg.photo, file=photo_path)
                     # Convert datetime to timezone-unaware format
                     msg_date = msg.date.replace(tzinfo=None) if msg.date else None
                     all_messages.append(

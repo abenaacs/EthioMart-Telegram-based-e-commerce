@@ -1,0 +1,13 @@
+.git
+data/
+env/
+main.py
+session.session
+scraping_session.session
+real_time_session.session
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+.env
+photos/
