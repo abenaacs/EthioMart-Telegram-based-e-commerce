@@ -1,6 +1,7 @@
 from telethon.sync import TelegramClient
 import pandas as pd
 import logging
+import os
 
 # Set up logging
 logging.basicConfig(
@@ -8,8 +9,8 @@ logging.basicConfig(
 )
 
 
-def fetch_telegram_data(api_id, api_hash, channel_list, output_file):
-    """Fetch messages from Telegram channels and save to an Excel file."""
+def fetch_telegram_data(api_id, api_hash, channel_list, output_file, output_folder):
+    """Fetch messages and images from Telegram channels and save to an Excel file."""
     try:
         client = TelegramClient("session", api_id, api_hash)
         client.start()
@@ -22,9 +23,11 @@ def fetch_telegram_data(api_id, api_hash, channel_list, output_file):
                     channel, limit=100
                 )  # Adjust limit as needed
                 for msg in messages:
+                    photo_path = None
                     if msg.photo:
                         photo_path = os.path.join(output_folder, f"{msg.id}.jpg")
                         client.download_media(msg.photo, file=photo_path)
+
                     # Convert datetime to timezone-unaware format
                     msg_date = msg.date.replace(tzinfo=None) if msg.date else None
                     all_messages.append(
@@ -33,6 +36,7 @@ def fetch_telegram_data(api_id, api_hash, channel_list, output_file):
                             "message": msg.text,
                             "date": msg_date,
                             "sender": msg.sender_id if msg.sender_id else None,
+                            "photo_path": photo_path,
                         }
                     )
             except Exception as e:
